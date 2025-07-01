@@ -1,0 +1,55 @@
+To modify the code to use two IR sensor modules, two LDRs (Light Dependent Resistors), and two LEDs, you can extend the code as follows:
+
+```arduino
+const int IR1SensorPin = 2; // Digital pin for the first IR sensor module
+const int IR2SensorPin = 3; // Digital pin for the second IR sensor module
+const int LDR1Pin = A0;     // Analog pin for the first LDR sensor
+const int LDR2Pin = A1;     // Analog pin for the second LDR sensor
+const int LED1Pin = 9;      // Digital pin for the first LED
+const int LED2Pin = 10;     // Digital pin for the second LED
+
+void setup() {
+  pinMode(IR1SensorPin, INPUT);
+  pinMode(IR2SensorPin, INPUT);
+  pinMode(LEDDPin, OUTPUT);
+  pinMode(LED2Pin, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  int IR1Value = digitalRead(IR1SensorPin); // Read first IR sensor value (0 for no object, 1 for object)
+  int IR2Value = digitalRead(IR2SensorPin); // Read second IR sensor value (0 for no object, 1 for object)
+  int LDR1Value = analogRead(LDR1Pin);     // Read first LDR value (0-1023)
+  int LDR2Value = analogRead(LDR2Pin);     // Read second LDR value (0-1023)
+
+  if (IR1Value == 1 && LDR1Value < 500) {
+    // Object detected by first IR sensor, and first LDR detects darkness
+    digitalWrite(LED1Pin, HIGH); // Turn on first LED
+    Serial.println("Object detected by Sensor 1, LED 1 on.");
+  } else {
+    digitalWrite(LED1Pin, LOW); // Turn off first LED
+  }
+
+  if (IR2Value == 1 && LDR2Value < 500) {
+    // Object detected by second IR sensor, and second LDR detects darkness
+    digitalWrite(LED2Pin, HIGH); // Turn on second LED
+    Serial.println("Object detected by Sensor 2, LED 2 on.");
+  } else {
+    digitalWrite(LED2Pin, LOW); // Turn off second LED
+  }
+
+  delay(100); // Delay for stability
+}
+```
+
+In this modified code:
+
+- Two IR sensor modules are connected to digital pins 2 and 3 of the Arduino.
+
+- Two LDRs are connected to analog pins A0 and A1 of the Arduino.
+
+- Two LEDs are connected to digital pins 9 and 10 of the Arduino.
+
+- The code checks each IR sensor separately and associates it with its respective LED and LDR. If an object is detected by an IR sensor and its associated LDR detects darkness, the corresponding LED is turned on.
+
+Ensure that you have properly connected the components to their respective pins on the Arduino to match the code configuration.
